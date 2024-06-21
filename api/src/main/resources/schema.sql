@@ -27,14 +27,16 @@ CREATE TABLE `user_role`
 CREATE TABLE `category`
 (
     `id`         integer PRIMARY KEY AUTO_INCREMENT,
-    `name`       varchar(255) NOT NULL,
+    `name`       text,
+    `description`       varchar(255) NOT NULL,
     `created_at` timestamp
 );
 
 CREATE TABLE `brand`
 (
     `id`         integer PRIMARY KEY AUTO_INCREMENT,
-    `name`       varchar(255) NOT NULL,
+    `name`       text,
+    `description`       varchar(255) NOT NULL,
     `created_at` timestamp
 );
 
