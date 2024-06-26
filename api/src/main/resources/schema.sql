@@ -1,4 +1,7 @@
-CREATE TABLE `user`
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user`
 (
     `id`           integer PRIMARY KEY AUTO_INCREMENT,
     `username`     varchar(255),
@@ -8,14 +11,16 @@ CREATE TABLE `user`
     `created_at`   timestamp
 );
 
-CREATE TABLE `role`
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE IF NOT EXISTS `role`
 (
     `id`         integer PRIMARY KEY AUTO_INCREMENT,
     `name`       varchar(255),
     `created_at` timestamp
 );
 
-CREATE TABLE `user_role`
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE IF NOT EXISTS `user_role`
 (
     `user_id` integer,
     `role_id` integer,
@@ -24,27 +29,30 @@ CREATE TABLE `user_role`
     FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
 );
 
-CREATE TABLE `category`
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE IF NOT EXISTS `category`
 (
-    `id`         integer PRIMARY KEY AUTO_INCREMENT,
-    `name`       text,
-    `description`       varchar(255) NOT NULL,
-    `created_at` timestamp
+    `id`          integer PRIMARY KEY AUTO_INCREMENT,
+    `name`        varchar(255),
+    `description` text NOT NULL,
+    `created_at`  timestamp
 );
 
-CREATE TABLE `brand`
+DROP TABLE IF EXISTS `brand`;
+CREATE TABLE IF NOT EXISTS `brand`
 (
-    `id`         integer PRIMARY KEY AUTO_INCREMENT,
-    `name`       text,
-    `description`       varchar(255) NOT NULL,
-    `created_at` timestamp
+    `id`          integer PRIMARY KEY AUTO_INCREMENT,
+    `name`        varchar(255),
+    `description` text NOT NULL,
+    `created_at`  timestamp
 );
 
-CREATE TABLE `product`
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE IF NOT EXISTS `product`
 (
     `id`           integer PRIMARY KEY AUTO_INCREMENT,
     `name`         varchar(255) NOT NULL,
-    `description`  varchar(255),
+    `description`  text,
     `price`        double       NOT NULL,
     `stock`        integer      NOT NULL,
     `batch_number` varchar(255) NOT NULL,
@@ -56,7 +64,8 @@ CREATE TABLE `product`
     FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`)
 );
 
-CREATE TABLE `order`
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE IF NOT EXISTS `order`
 (
     `id`          integer PRIMARY KEY AUTO_INCREMENT,
     `total_price` double    NOT NULL,
@@ -67,7 +76,8 @@ CREATE TABLE `order`
     FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
 
-CREATE TABLE `order_detail`
+DROP TABLE IF EXISTS `order_detail`;
+CREATE TABLE IF NOT EXISTS `order_detail`
 (
     `id`         integer PRIMARY KEY AUTO_INCREMENT,
     `price`      double NOT NULL,
@@ -79,7 +89,8 @@ CREATE TABLE `order_detail`
     FOREIGN KEY (`order_id`) REFERENCES `order` (`id`)
 );
 
-CREATE TABLE `refund`
+DROP TABLE IF EXISTS `refund`;
+CREATE TABLE IF NOT EXISTS `refund`
 (
     `id`          integer PRIMARY KEY AUTO_INCREMENT,
     `total_price` double       NOT NULL,
@@ -91,7 +102,8 @@ CREATE TABLE `refund`
     FOREIGN KEY (`order_id`) REFERENCES `order` (`id`)
 );
 
-CREATE TABLE `promotion`
+DROP TABLE IF EXISTS `promotion`;
+CREATE TABLE IF NOT EXISTS `promotion`
 (
     `id`                  integer PRIMARY KEY AUTO_INCREMENT,
     `code`                varchar(255) NOT NULL,
@@ -101,7 +113,8 @@ CREATE TABLE `promotion`
     `created_at`          timestamp
 );
 
-CREATE TABLE `sale`
+DROP TABLE IF EXISTS `sale`;
+CREATE TABLE IF NOT EXISTS `sale`
 (
     `id`            integer PRIMARY KEY AUTO_INCREMENT,
     `quantity_sold` integer   NOT NULL,

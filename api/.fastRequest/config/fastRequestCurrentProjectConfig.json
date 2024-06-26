@@ -4,15 +4,29 @@
 		"domain":"https://api.apifox.com",
 		"syncAfterSave":false
 	},
-	"dataList":[],
-	"envList":[],
+	"dataList":[
+		{
+			"hostGroup":[
+				{
+					"env":"localhost",
+					"url":"http://localhost:8080"
+				}
+			],
+			"name":"mse"
+		}
+	],
+	"envList":[
+		"localhost"
+	],
 	"headerList":[],
 	"ignoreParseFieldList":[],
 	"maxDescriptionLength":-1,
 	"pmCollectionId":"",
 	"postScript":"",
 	"preScript":"",
-	"projectList":[],
+	"projectList":[
+		"mse"
+	],
 	"syncModel":{
 		"branch":"master",
 		"domain":"https://github.com",
