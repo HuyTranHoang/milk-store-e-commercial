@@ -1,6 +1,7 @@
 package com.huy.mse.category;
 
 import jakarta.persistence.NoResultException;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class CategoryController {
     }
 
     @PostMapping({"", "/"})
-    public ResponseEntity<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<CategoryDto> addCategory(@RequestBody @Valid CategoryDto categoryDto) {
         CategoryDto categoryReturn = categoryService.createCategory(categoryDto);
         return ResponseEntity.ok(categoryReturn);
     }

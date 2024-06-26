@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `product`
     `stock`        integer      NOT NULL,
     `batch_number` varchar(255) NOT NULL,
     `expiry_date`  timestamp    NOT NULL,
+    `image_url`    varchar(255) NOT NULL,
     `created_at`   timestamp,
     `category_id`  integer,
     `brand_id`     integer,

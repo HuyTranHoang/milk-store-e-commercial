@@ -33,6 +33,9 @@ public class Product {
 
     private Date expiryDate;
 
+    @Column(name = "image_url")
+    private String imageUrl = "default.jpg";
+
     @CreationTimestamp
     private Date createdAt;
 
