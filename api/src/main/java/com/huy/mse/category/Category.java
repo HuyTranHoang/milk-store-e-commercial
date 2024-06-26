@@ -25,6 +25,7 @@ public class Category {
     private String description;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private Date createdAt;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")

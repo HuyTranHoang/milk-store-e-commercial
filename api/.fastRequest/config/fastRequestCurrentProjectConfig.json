@@ -10,13 +10,18 @@
 				{
 					"env":"localhost",
 					"url":"http://localhost:8080"
+				},
+				{
+					"env":"local",
+					"url":"http://localhost:8080"
 				}
 			],
 			"name":"mse"
 		}
 	],
 	"envList":[
-		"localhost"
+		"localhost",
+		"local"
 	],
 	"headerList":[],
 	"ignoreParseFieldList":[],

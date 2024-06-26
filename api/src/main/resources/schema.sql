@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `user`
     `password`     varchar(255),
     `email`        varchar(255),
     `phone_number` varchar(255),
-    `created_at`   timestamp
+    `created_at`   datetime(6)
 );
 
 DROP TABLE IF EXISTS `role`;
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `role`
 (
     `id`         integer PRIMARY KEY AUTO_INCREMENT,
     `name`       varchar(255),
-    `created_at` timestamp
+    `created_at` datetime(6)
 );
 
 DROP TABLE IF EXISTS `user_role`;
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `category`
     `id`          integer PRIMARY KEY AUTO_INCREMENT,
     `name`        varchar(255),
     `description` text NOT NULL,
-    `created_at`  timestamp
+    `created_at`  datetime(6)
 );
 
 DROP TABLE IF EXISTS `brand`;
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `brand`
     `id`          integer PRIMARY KEY AUTO_INCREMENT,
     `name`        varchar(255),
     `description` text NOT NULL,
-    `created_at`  timestamp
+    `created_at`  datetime(6)
 );
 
 DROP TABLE IF EXISTS `product`;
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `order`
     `total_price` double    NOT NULL,
     `order_date`  timestamp NOT NULL,
     `status`      varchar(255),
-    `created_at`  timestamp,
+    `created_at`  datetime(6),
     `user_id`     integer,
     FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `refund`
     `refund_date` timestamp    NOT NULL,
     `status`      varchar(255) NOT NULL,
     `reason`      varchar(255),
-    `created_at`  timestamp,
+    `created_at`  datetime(6),
     `order_id`    integer,
     FOREIGN KEY (`order_id`) REFERENCES `order` (`id`)
 );
