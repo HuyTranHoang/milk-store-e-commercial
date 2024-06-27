@@ -1,6 +1,5 @@
 package com.huy.mse.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.huy.mse.brand.Brand;
 import com.huy.mse.category.Category;
 import jakarta.persistence.*;
