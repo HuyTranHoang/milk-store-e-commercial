@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "product")
@@ -30,13 +30,13 @@ public class Product {
 
     private String batchNumber;
 
-    private Date expiryDate;
+    private LocalDate expiryDate;
 
     @Column(name = "image_url")
-    private String imageUrl = "default.jpg";
+    private String imageUrl;
 
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

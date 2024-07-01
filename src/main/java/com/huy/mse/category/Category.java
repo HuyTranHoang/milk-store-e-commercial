@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -26,7 +26,7 @@ public class Category {
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private List<Product> products;

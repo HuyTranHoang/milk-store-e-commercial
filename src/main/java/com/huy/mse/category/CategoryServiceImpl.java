@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
@@ -26,23 +26,23 @@ public class CategoryServiceImpl implements CategoryService{
     public CategoryDto getCategoryById(long id) {
         return categoryRepository.findById(id)
                 .map(categoryMapper::toDto)
-                .orElse(null);
+                .orElseThrow(() -> new RuntimeException("Category not found"));
     }
 
     @Override
     public CategoryDto createCategory(CategoryDto categoryDto) {
+        if (categoryRepository.findByName(categoryDto.getName()) != null) {
+            throw new RuntimeException("Category already exists");
+        }
+
         Category category = categoryMapper.toEntity(categoryDto);
         return categoryMapper.toDto(categoryRepository.save(category));
     }
 
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto) {
-        Category category = categoryRepository.findById(categoryDto.getId()).orElse(null);
-
-        if (category == null) {
-            return null;
-        }
-
+        Category category = categoryRepository.findById(categoryDto.getId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
         category.setName(categoryDto.getName());
         category.setDescription(categoryDto.getDescription());
 
@@ -52,6 +52,12 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public void deleteCategory(long id) {
-        categoryRepository.deleteById(id);
+        Category category = categoryRepository.findById(id).orElse(null);
+
+        if (category == null) {
+            throw new RuntimeException("Category not found");
+        }
+
+        categoryRepository.delete(category);
     }
 }

@@ -24,11 +24,6 @@ public class BrandController {
     @GetMapping("/{id}")
     public ResponseEntity<BrandDto> getBrandById(@PathVariable long id) {
         BrandDto brandDto = brandService.getBrandById(id);
-
-        if (brandDto == null) {
-            throw new NoResultException("Brand not found");
-        }
-
         return ResponseEntity.ok(brandDto);
     }
 
@@ -42,11 +37,6 @@ public class BrandController {
     public ResponseEntity<BrandDto> updateBrand(@PathVariable long id, @RequestBody BrandDto brandDto) {
         brandDto.setId(id);
         BrandDto brandReturn = brandService.updateBrand(brandDto);
-
-        if (brandReturn == null) {
-            throw new NoResultException("Brand not found");
-        }
-
         return ResponseEntity.ok(brandReturn);
     }
 

@@ -24,11 +24,6 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> getCategoryById(@PathVariable long id) {
         CategoryDto categoryDto = categoryService.getCategoryById(id);
-
-        if (categoryDto == null) {
-            throw new NoResultException("Category not found");
-        }
-
         return ResponseEntity.ok(categoryDto);
     }
 
@@ -42,11 +37,6 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> updateCategory(@PathVariable long id, @RequestBody CategoryDto categoryDto) {
         categoryDto.setId(id);
         CategoryDto categoryReturn = categoryService.updateCategory(categoryDto);
-
-        if (categoryReturn == null) {
-            throw new NoResultException("Category not found");
-        }
-
         return ResponseEntity.ok(categoryReturn);
     }
 
