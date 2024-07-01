@@ -9,7 +9,7 @@
 	<id>mse</id>
 
 	<classpath>
-		<dir name="D:/milk-store-ecom/api/target/classes">
+		<dir name="D:/milk-store-ecom/target/classes">
 		</dir>
 	</classpath>
 

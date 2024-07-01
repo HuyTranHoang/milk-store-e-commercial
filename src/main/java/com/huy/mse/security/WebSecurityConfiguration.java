@@ -19,7 +19,7 @@ public class WebSecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers("/resources/images/**")
+                                .requestMatchers("/resources/static/images/**")
                                 .permitAll()
                                 .anyRequest().permitAll()
 //                                .anyRequest().authenticated()

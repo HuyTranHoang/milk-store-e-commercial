@@ -27,22 +27,23 @@ public class BrandServiceImpl implements BrandService {
     public BrandDto getBrandById(long id) {
         return brandRepository.findById(id)
                 .map(brandMapper::toDto)
-                .orElse(null);
+                .orElseThrow(() -> new RuntimeException("Brand not found"));
     }
 
     @Override
     public BrandDto createBrand(BrandDto brandDto) {
+        if (brandRepository.findByName(brandDto.getName()) != null) {
+            throw new RuntimeException("Brand already exists");
+        }
+
         Brand brand = brandMapper.toEntity(brandDto);
         return brandMapper.toDto(brandRepository.save(brand));
     }
 
     @Override
     public BrandDto updateBrand(BrandDto brandDto) {
-        Brand brand = brandRepository.findById(brandDto.getId()).orElse(null);
-
-        if (brand == null) {
-            return null;
-        }
+        Brand brand = brandRepository.findById(brandDto.getId())
+                .orElseThrow(() -> new RuntimeException("Brand not found"));
 
         brand.setName(brandDto.getName());
         brand.setDescription(brandDto.getDescription());
@@ -52,6 +53,12 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public void deleteBrand(long id) {
-        brandRepository.deleteById(id);
+        Brand brand = brandRepository.findById(id).orElse(null);
+
+        if (brand == null) {
+            throw new RuntimeException("Brand not found");
+        }
+
+        brandRepository.delete(brand);
     }
 }
