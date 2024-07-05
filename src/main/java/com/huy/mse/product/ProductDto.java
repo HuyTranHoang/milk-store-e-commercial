@@ -1,11 +1,13 @@
 package com.huy.mse.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -49,4 +51,7 @@ public class ProductDto {
 
     private String brandName;
 
+    @Transient
+    @JsonIgnore
+    private MultipartFile image;
 }

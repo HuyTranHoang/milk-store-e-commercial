@@ -4,6 +4,7 @@ import com.huy.mse.brand.Brand;
 import com.huy.mse.brand.BrandRepository;
 import com.huy.mse.category.Category;
 import com.huy.mse.category.CategoryRepository;
+import jakarta.persistence.NoResultException;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -35,12 +36,12 @@ public abstract class ProductMapper {
     @Named("mapCategory")
     public Category mapCategory(long categoryId) {
         return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new NoResultException("Category not found"));
     }
 
     @Named("mapBrand")
     public Brand mapBrand(long brandId) {
         return brandRepository.findById(brandId)
-                .orElseThrow(() -> new RuntimeException("Brand not found"));
+                .orElseThrow(() -> new NoResultException("Brand not found"));
     }
 }

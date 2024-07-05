@@ -27,13 +27,13 @@ public class ProductController {
     }
 
     @PostMapping({"", "/"})
-    public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<ProductDto> addProduct(@ModelAttribute ProductDto productDto) {
         ProductDto productReturn = productService.createProduct(productDto);
         return ResponseEntity.ok(productReturn);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable long id, @RequestBody ProductDto productDto) {
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable long id, @ModelAttribute ProductDto productDto) {
         productDto.setId(id);
         ProductDto productReturn = productService.updateProduct(id, productDto);
         return ResponseEntity.ok(productReturn);
