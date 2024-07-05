@@ -10,9 +10,14 @@ public class PageInfo {
     private int size;
 
     public PageInfo(int number, long totalElements, int totalPages, int size) {
-        this.number = number;
+        this.number = Math.max(number, 0);
         this.totalElements = totalElements;
         this.totalPages = totalPages;
-        this.size = size;
+
+        if (size <= 0 || size > 50) {
+            this.size = 10;
+        } else {
+            this.size = size;
+        }
     }
 }

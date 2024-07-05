@@ -1,0 +1,32 @@
+package com.huy.mse.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Entity
+@Table(name = "category")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    private String name;
+
+    private String description;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private List<Product> products;
+}
