@@ -3,7 +3,7 @@ package com.huy.mse.product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/products")
@@ -16,8 +16,8 @@ public class ProductController {
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<List<ProductDto>> getProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
+    public ResponseEntity<Map<String, Object>> getProductsWithPagination(@ModelAttribute ProductParams productParams) {
+        return ResponseEntity.ok(productService.getAllProducts(productParams));
     }
 
     @GetMapping("/{id}")

@@ -1,6 +1,12 @@
 package com.huy.mse.product;
 
+import com.huy.mse.common.PageInfo;
 import jakarta.persistence.NoResultException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,9 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -25,11 +29,42 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> getAllProducts() {
-        return productRepository.findAll()
-                .stream()
+    public Map<String, Object> getAllProducts(ProductParams productParams) {
+
+        Specification<Product> spec = ProductSpecification.searchByName(productParams.getName())
+                .and(ProductSpecification.filterByBrand(productParams.getBrandNameList()))
+                .and(ProductSpecification.filterByCategoryName(productParams.getCategoryNameList()));
+
+        Sort sort = switch (productParams.getSortBy()) {
+            case "priceAsc" -> Sort.by(Sort.Order.asc("price"));
+            case "priceDesc" -> Sort.by(Sort.Order.desc("price"));
+            default -> Sort.by(Sort.Order.asc("id"));
+        };
+
+        Pageable pageable = PageRequest.of(
+                productParams.getPageNumber(),
+                productParams.getPageSize(),
+                sort
+        );
+
+        Page<Product> productPage = productRepository.findAll(spec, pageable);
+
+        PageInfo pageInfo = new PageInfo(
+                productPage.getNumber(),
+                productPage.getTotalElements(),
+                productPage.getTotalPages(),
+                productPage.getSize()
+        );
+
+        List<ProductDto> productDtoList = productPage.stream()
                 .map(productMapper::toDto)
                 .toList();
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("pageInfo", pageInfo);
+        response.put("data", productDtoList);
+
+        return response;
     }
 
     @Override
