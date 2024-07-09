@@ -9,26 +9,33 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "category")
+@Table(name = "order")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Category {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    String name;
+    double totalPrice;
 
-    String description;
+    LocalDate orderDate;
+
+    String status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    UserEntity user;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    List<OrderDetail> orderDetails;
 
     @CreationTimestamp
     @Column(name = "created_at")
     LocalDate createdAt;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    List<Product> products;
 }

@@ -1,34 +1,39 @@
 package com.huy.mse.entity;
 
+import com.huy.mse.entity.embedded.OrderDetailPK;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
-@Table(name = "category")
+@Table(name = "order_detail")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+public class OrderDetail {
 
-    String name;
+    @EmbeddedId
+    OrderDetailPK id;
 
-    String description;
+    double price;
+
+    int quantity;
 
     @CreationTimestamp
     @Column(name = "created_at")
     LocalDate createdAt;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    List<Product> products;
+    @ManyToOne
+    @MapsId("order_id")
+    Order order;
+
+    @ManyToOne
+    @MapsId("product_id")
+    Product product;
 }

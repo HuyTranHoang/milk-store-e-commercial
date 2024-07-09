@@ -1,11 +1,9 @@
 package com.huy.mse.repository;
 
 import com.huy.mse.entity.Brand;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BrandRepository extends JpaRepository<Brand, Long> {
-
+public interface BrandRepository extends GenericRepository<Brand> {
     Brand findByName(String name);
 }

@@ -1,57 +1,57 @@
 package com.huy.mse.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductDto {
-    private long id;
+    long id;
 
     @NotEmpty(message = "Name is required")
-    private String name;
+    String name;
 
-    private String description;
+    String description;
 
     @NotEmpty(message = "Price is required")
     @Min(value = 0, message = "Price must be greater than 0")
     @Max(value = 1000000, message = "Price must be less than 1000000")
-    private double price;
+    double price;
 
     @NotEmpty(message = "Stock is required")
     @Min(value = 0, message = "Stock must be greater than 0")
-    private int stock;
+    int stock;
 
     @NotEmpty(message = "Batch number is required")
-    private String batchNumber;
+    String batchNumber;
 
     @NotEmpty(message = "Expiry date is required")
-    private LocalDate expiryDate;
+    LocalDate expiryDate;
 
     @NotEmpty(message = "Image URL is required")
-    private String imageUrl;
+    String imageUrl;
 
-    private LocalDate createdAt;
+    LocalDate createdAt;
 
-    @Transient
-    private long categoryId;
+    long categoryId;
 
-    private String categoryName;
+    String categoryName;
 
-    @Transient
-    private long brandId;
+    long brandId;
 
-    private String brandName;
+    String brandName;
 
-    @Transient
     @JsonIgnore
-    private MultipartFile image;
+    MultipartFile image;
 }
