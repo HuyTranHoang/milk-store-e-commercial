@@ -1,16 +1,19 @@
 package com.huy.mse.dto.params;
 
 import com.huy.mse.enums.ProductSortType;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductParams {
-    private String name;
-    private String brandNameList;
-    private String categoryNameList;
-    private int pageNumber = 0;
-    private int pageSize = 10;
-    private ProductSortType sortBy;
+    String name;
+    String brandNameList;
+    String categoryNameList;
+    int pageNumber = 0;
+    int pageSize = 10;
+    ProductSortType sortBy;
 }

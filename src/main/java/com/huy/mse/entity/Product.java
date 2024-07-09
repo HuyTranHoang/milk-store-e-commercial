@@ -2,6 +2,7 @@ package com.huy.mse.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
@@ -13,34 +14,35 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;
 
-    private String name;
+    String name;
 
-    private String description;
+    String description;
 
-    private double price;
+    double price;
 
-    private int stock;
+    int stock;
 
-    private String batchNumber;
+    String batchNumber;
 
-    private LocalDate expiryDate;
+    LocalDate expiryDate;
 
     @Column(name = "image_url")
-    private String imageUrl;
+    String imageUrl;
 
     @CreationTimestamp
-    private LocalDate createdAt;
+    LocalDate createdAt;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    Category category;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
-    private Brand brand;
+    Brand brand;
 }

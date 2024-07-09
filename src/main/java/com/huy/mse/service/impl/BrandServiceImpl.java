@@ -1,69 +1,52 @@
 package com.huy.mse.service.impl;
 
 import com.huy.mse.dto.BrandDto;
-import com.huy.mse.mapper.BrandMapper;
-import com.huy.mse.repository.BrandRepository;
 import com.huy.mse.entity.Brand;
+import com.huy.mse.repository.BrandRepository;
+import com.huy.mse.repository.GenericRepository;
 import com.huy.mse.service.BrandService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class BrandServiceImpl implements BrandService {
-
+public class BrandServiceImpl extends GenericServiceImpl<Brand, BrandDto> implements BrandService {
     private final BrandRepository brandRepository;
-    private final BrandMapper brandMapper;
 
-    public BrandServiceImpl(BrandRepository brandRepository, BrandMapper brandMapper) {
+    public BrandServiceImpl(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
-        this.brandMapper = brandMapper;
     }
 
     @Override
-    public List<BrandDto> getAllBrands() {
-        return brandRepository.findAll()
-                .stream()
-                .map(brandMapper::toDto)
-                .toList();
+    protected GenericRepository<Brand> getRepository() {
+        return brandRepository;
+    }
+
+    /*
+        Helper methods for mapping
+     */
+
+
+    @Override
+    public BrandDto toDto(Brand brand) {
+        return BrandDto.builder()
+                .id(brand.getId())
+                .name(brand.getName())
+                .description(brand.getDescription())
+                .createdAt(brand.getCreatedAt())
+                .build();
     }
 
     @Override
-    public BrandDto getBrandById(long id) {
-        return brandRepository.findById(id)
-                .map(brandMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("Brand not found"));
+    public Brand toEntity(BrandDto brandDto) {
+        return Brand.builder()
+                .id(brandDto.getId())
+                .name(brandDto.getName())
+                .description(brandDto.getDescription())
+                .build();
     }
 
     @Override
-    public BrandDto createBrand(BrandDto brandDto) {
-        if (brandRepository.findByName(brandDto.getName()) != null) {
-            throw new RuntimeException("Brand already exists");
-        }
-
-        Brand brand = brandMapper.toEntity(brandDto);
-        return brandMapper.toDto(brandRepository.save(brand));
-    }
-
-    @Override
-    public BrandDto updateBrand(BrandDto brandDto) {
-        Brand brand = brandRepository.findById(brandDto.getId())
-                .orElseThrow(() -> new RuntimeException("Brand not found"));
-
+    public void updateEntityFromDto(Brand brand, BrandDto brandDto) {
         brand.setName(brandDto.getName());
         brand.setDescription(brandDto.getDescription());
-
-        return brandMapper.toDto(brandRepository.save(brand));
-    }
-
-    @Override
-    public void deleteBrand(long id) {
-        Brand brand = brandRepository.findById(id).orElse(null);
-
-        if (brand == null) {
-            throw new RuntimeException("Brand not found");
-        }
-
-        brandRepository.delete(brand);
     }
 }
