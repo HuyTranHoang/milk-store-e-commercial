@@ -1,6 +1,7 @@
 package com.huy.mse.service.impl;
 
 import com.huy.mse.common.PageInfo;
+import com.huy.mse.config.JsonProperties;
 import com.huy.mse.dto.ProductDto;
 import com.huy.mse.dto.params.ProductParams;
 import com.huy.mse.entity.Brand;
@@ -34,11 +35,13 @@ public class ProductServiceImpl extends GenericServiceImpl<Product, ProductDto> 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
+    private final JsonProperties jsonProperties;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, BrandRepository brandRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, BrandRepository brandRepository, JsonProperties jsonProperties) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.brandRepository = brandRepository;
+        this.jsonProperties = jsonProperties;
     }
 
 
@@ -65,6 +68,14 @@ public class ProductServiceImpl extends GenericServiceImpl<Product, ProductDto> 
             case PRICE_DESC -> Sort.by(Sort.Order.desc(Product_.PRICE));
             default -> Sort.by(Sort.Order.asc(Product_.ID));
         };
+
+        if (productParams.getPageSize() <= 0) {
+            productParams.setPageSize(jsonProperties.getDefaultPageSize());
+        }
+
+        if (productParams.getPageNumber() < 0) {
+            productParams.setPageNumber(jsonProperties.getDefaultPageNumber());
+        }
 
         Pageable pageable = PageRequest.of(
                 productParams.getPageNumber(),

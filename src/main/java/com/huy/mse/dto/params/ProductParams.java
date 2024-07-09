@@ -13,7 +13,7 @@ public class ProductParams {
     String name;
     String brandNameList;
     String categoryNameList;
-    int pageNumber = 0;
-    int pageSize = 10;
+    int pageNumber;
+    int pageSize;
     ProductSortType sortBy;
 }

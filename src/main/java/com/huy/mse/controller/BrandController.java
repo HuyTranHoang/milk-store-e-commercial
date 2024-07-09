@@ -1,5 +1,6 @@
 package com.huy.mse.controller;
 
+import com.huy.mse.config.JsonProperties;
 import com.huy.mse.dto.BrandDto;
 import com.huy.mse.service.BrandService;
 import jakarta.validation.Valid;

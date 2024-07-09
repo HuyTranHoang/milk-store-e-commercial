@@ -9,44 +9,33 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "product")
+@Table(name = "order")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Product {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    String name;
+    double totalPrice;
 
-    String description;
+    LocalDate orderDate;
 
-    double price;
+    String status;
 
-    int stock;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    UserEntity user;
 
-    String batchNumber;
-
-    LocalDate expiryDate;
-
-    @Column(name = "image_url")
-    String imageUrl;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    List<OrderDetail> orderDetails;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     LocalDate createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    Category category;
-
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    Brand brand;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    List<OrderDetail> orderDetails;
 }
